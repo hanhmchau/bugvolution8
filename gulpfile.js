@@ -6,7 +6,7 @@ const concat = require('gulp-concat');
 gulp.task('sass', function (cb) {
     gulp.src(['css/*.scss', 'css/**/*.scss'])
         .pipe(sass({outputStyle: 'compressed'}))
-        .pipe(concat('bugvolution.css'))
+        .pipe(concat('bugvolution8.css'))
         .pipe(gulp.dest('dist/'));
         cb();
 });

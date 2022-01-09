@@ -1,5 +1,9 @@
 @import 'variables';
 
+.danger {
+	color: red;
+}
+
 #chat-log,
 .bugvolution-chat-log {
 	.message {
@@ -9,6 +13,20 @@
 
 		&.whisper {
 			background-color: $background-whisper;
+		}
+
+		img {
+			border: none;
+			width: $avatar-width;
+		}
+
+		.avatar {
+			flex: none;
+			width: $avatar-width;
+		}
+
+		.message-content {
+			display: inline;
 		}
 	}
 
@@ -36,11 +54,7 @@
 		}
 	}
 
-	.message.roll-ui:not(.modified) {
-		padding: 6px;
-	}
-
-	.message.lite-ui.modified {
+	.message.lite-ui {
 		padding: 5px 7px;
 
 		&.leading {
@@ -49,7 +63,8 @@
 		}
 
 		&.continued {
-			.message-header, .message-speaker {
+			.message-header,
+			.message-speaker {
 				display: none;
 			}
 			.avatar {
@@ -88,7 +103,7 @@
 		font-style: italic;
 	}
 
-	.message.roll-ui.modified {
+	.message.roll-ui {
 		border: none;
 		background: none;
 
@@ -108,19 +123,10 @@
 			padding-bottom: 6px;
 		}
 
-		img {
-			border: none;
-			width: $avatar-width;
-		}
-
-		.avatar {
-			flex: none;
-			width: $avatar-width;
-		}
-
 		.content {
 			flex: 1;
 			padding: 1px 0 1px 10px;
+			min-width: 0;
 
 			.message-timestamp {
 				font-size: 0.8em;
@@ -128,36 +134,52 @@
 				margin-bottom: 4px;
 			}
 
+			.message-flavor {
+				font-size: 0.85em;
+				font-style: italic;
+				color: $color-timestamp;
+				margin: 4px 0;
+			}
+
 			.message-speaker {
 				font-weight: bold;
+			}
+
+			.message-content {
+				display: inline;
+
+				.message-subtext {
+					color: $color-timestamp;
+					margin-top: 10px;
+				}
 			}
 
 			color: $color-text;
 		}
 
-		.roll-content {
-			flex-basis: auto;
-			width: 100%;
-
-			.chat-card {
-				border: none;
-
-				.card-header {
-					border-top: none;
-				}
-			}
-
-			.red-full {
-				margin: 2px;
-				padding: 5px;
-				border-radius: 5px;
-				border: 1px solid $roll-template-border;
-				background-color: $roll-template-background;
-			}
-		}
-
 		&.roll {
 			flex-wrap: wrap;
+
+			.message-content {
+				flex-basis: auto;
+				width: 100%;
+
+				.chat-card {
+					border: none;
+
+					.card-header {
+						border-top: none;
+					}
+				}
+
+				.red-full {
+					margin: 2px;
+					padding: 5px;
+					border-radius: 5px;
+					border: 1px solid $roll-template-border;
+					background-color: $roll-template-background;
+				}
+			}
 		}
 
 		&.whisper {
@@ -182,7 +204,8 @@
 				width: $avatar-width;
 			}
 
-			.message-timestamp, .message-speaker {
+			.message-timestamp,
+			.message-speaker {
 				display: none;
 			}
 
@@ -204,6 +227,7 @@
 			}
 
 			.message-sender,
+			.message-speaker,
 			.message-metadata,
 			.message-timestamp {
 				display: none;
@@ -228,6 +252,22 @@
 					padding: 4px 0;
 				}
 			}
+		}
+	}
+}
+
+#preview-delete-dialog {
+	.dialog-prompt {
+		margin-top: 5px;
+	}
+
+	.preview-delete {
+		margin: 10px 0 5px 0 !important;
+		max-height: 500px;
+		overflow: auto;
+
+		#context-menu {
+			display: none;
 		}
 	}
 }

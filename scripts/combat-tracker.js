@@ -1,63 +1,28 @@
-export default class AutoscrollCombatTracker extends CombatTracker {
-	/** @override */
-	static get defaultOptions() {
-		return mergeObject(super.defaultOptions, {
-			originalClass: CombatTracker,
-			baseApplication: 'CombatTracker'
-		});
-	}
-	/** @override */
-	/**
-	 * Scroll the combat log container to ensure the current Combatant turn is centered vertically
-	 */
-	scrollToTurn() {
-		// Scroll the combat tracker in the sidebar
-		super.scrollToTurn();
-		this.scrollPopoutToTurn();
-	}
+export default class AutoscrollCombatTracker {
+	static init() {
+		libWrapper.register(
+			'bugvolution8',
+			'CombatTracker.prototype.scrollToTurn',
+			async function (wrapped, ...args) {
+				wrapped(...args);
+				if (!this.popOut) {
+					ui.combat._popout?.scrollToTurn();
+				}
+			},
+			'WRAPPER'
+		);
 
-	scrollPopoutToTurn() {
-		if (!this.combat) return;
-		const popout = this._popout;
-		if (!popout) return;
-
-		const active = popout.element.find('.active')[0];
-
-		if (active) {
-			const container = active.parentElement;
-			const nViewable = Math.floor(container.offsetHeight / active.offsetHeight);
-			container.scrollTop = this.combat.turn * active.offsetHeight - (nViewable / 2) * active.offsetHeight;
-		}
+		CombatTrackerHooks.attach();
 	}
 }
 
-class CombatTrackerPopper {
-	constructor() {
-		this.popout = null;
-	}
-
-	popIn() {
-		this.popout = ui.combat.createPopout();
-		this.popout.render(true);
-	}
-
-	popAway() {
-		if (this.popout || ui.combat._popout) {
-			setTimeout(() => {
-				if (ui.combat._popout) {
-					ui.combat._popout.close();
-				}
-				if (this.popout) {
-					this.popout.close();
-				}
-			}, 100);
-		}
-	}
-}
-export class CombatTrackerHooks {
+class CombatTrackerHooks {
 	static attach() {
-		const popper = new CombatTrackerPopper();
-		Hooks.on('createCombat', popper.popIn.bind(popper));
-		Hooks.on('deleteCombat', popper.popAway.bind(popper));
+		Hooks.on('createCombat', () => {
+			ui.combat.createPopout().render(true);
+		});
+		Hooks.on('deleteCombat', () => {
+			ui.combat._popout?.close();
+		});
 	}
 }

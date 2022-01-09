@@ -1,5 +1,5 @@
 {
-  "name": "bugvolution",
+  "name": "bugvolution8",
   "version": "1.0.0",
   "description": "",
   "main": "main.js",
@@ -8,14 +8,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/hanhmchau/bugvolution.git"
+    "url": "git+https://github.com/hanhmchau/bugvolution8.git"
   },
   "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/hanhmchau/bugvolution/issues"
+    "url": "https://github.com/hanhmchau/bugvolution8/issues"
   },
-  "homepage": "https://github.com/hanhmchau/bugvolution#readme",
+  "homepage": "https://github.com/hanhmchau/bugvolution8#readme",
   "devDependencies": {
     "gulp": "^4.0.2",
     "gulp-concat": "^2.6.1",

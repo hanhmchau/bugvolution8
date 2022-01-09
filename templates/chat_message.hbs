@@ -1,19 +1,16 @@
-<div class="avatar">
-    <img src="{{avatar}}" />
+<div class='avatar'>
+	<img src='{{avatar}}' />
 </div>
-<div class="content">
-    <div class="message-timestamp">{{timeSince timestamp}}</div>
-    <span class="message-speaker">
-        {{#if isWhisper}}
-            {{speaker}}<span class="message-whisper-targets">{{whisperTo}}</span>:
-        {{else}}
-            {{speaker}}:
-        {{/if}}
-    </span>
-    <span class="message-content">
-        {{#unless isRoll}}{{{content}}}{{/unless}}
-    </span>
+<div class='content'>
+	<div class='message-timestamp'>{{timeSince timestamp}}</div>
+	<span class='message-speaker'>
+		{{#if isWhisper}}
+			{{speaker}}<span class='message-whisper-targets'>{{whisperTo}}</span>:
+		{{else}}
+			{{speaker}}:
+		{{/if}}
+	</span>
+	{{#if flavor}}
+		<div class='message-flavor'>{{flavor}}</div>
+	{{/if}}
 </div>
-{{#if isRoll}}
-    <div class="roll-content">{{{content}}}</div>
-{{/if}}

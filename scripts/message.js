@@ -1,13 +1,13 @@
 export default class AbstractMessage {
-	static loadPlayerForToken(token) {
+	loadPlayerForToken(token) {
 		return game.users.get(token);
 	}
 	/**
 	 * Load the appropriate actor for a given message, leveraging token or actor or actor search.
 	 * @param {*} speaker
 	 */
-	static loadActorForChatMessage(messageData) {
-		const speaker = messageData.message.speaker;
+	loadActorForChatMessage(messageData) {
+		const speaker = messageData.speaker;
 		if (speaker.token) {
 			const possibleToken = game.actors.tokens[speaker.token];
 			if (possibleToken) return possibleToken;
@@ -29,44 +29,44 @@ export default class AbstractMessage {
 	/**
 	 * @param {*} actor
 	 */
-	static getChatTokenImage(actor) {
+	getChatTokenImage(actor) {
 		if (actor) return actor.token ? actor.token.data.img : actor.data.token.img;
-		return "";
+		return '';
 	}
 
 	/**
 	 * @param {*} userId
 	 * @param {*} message
 	 */
-	static getUserImage(userId) {
+	getUserImage(userId) {
 		const user = game.users.get(userId);
 		if (user) {
 			return user.avatar;
 		}
-		return "";
+		return '';
 	}
 
-	static getWhisperTargets(names, speaker) {
-		if (typeof names === "string" && names.trim().length === 0) {
-			return "";
+	getWhisperTargets(names, speaker) {
+		if (typeof names === 'string' && names.trim().length === 0) {
+			return '';
 		}
-		if (typeof names === "string" && names !== speaker) {
+		if (typeof names === 'string' && names !== speaker) {
 			return names;
 		}
 		if (names && names.join) {
 			const validNames = names.filter((name) => name !== speaker);
-			if (validNames.length === 0) return "";
+			if (validNames.length === 0) return '';
 			const namesString = validNames.join(', ');
 			return namesString;
 		}
-		return "";
+		return '';
 	}
 
-	static _addClass = (html, className) => {
+	_addClass = (html, className) => {
 		html.addClass(className);
 	};
 
-	static _warn = (content) => {
+	_warn = (content) => {
 		console.warn(`MESSAGE GROUPING | ${content}`);
 	};
 }

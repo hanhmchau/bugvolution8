@@ -8,7 +8,14 @@ export default class RollIconsModification {
 		cha: ['charisma check', 'charisma save', 'deception', 'intimidation', 'performance', 'persuasion']
 	};
 
-	static keyMap = {};
+	static abilityIcon = {
+		str: 'systems/dnd5e/icons/skills/blood_11.jpg',
+		dex: 'systems/dnd5e/icons/skills/yellow_35.jpg',
+		con: 'systems/dnd5e/icons/skills/green_19.jpg',
+		int: 'systems/dnd5e/icons/skills/red_26.jpg',
+		wis: 'systems/dnd5e/icons/skills/emerald_11.jpg',
+		cha: 'systems/dnd5e/icons/skills/violet_18.jpg'
+	};
 
 	static init() {
 		for (const key in this.abilityMap) {
@@ -18,26 +25,19 @@ export default class RollIconsModification {
 		}
 	}
 
-	static process(chatMessage, html, data) {
-		if (!html.find('.red-full').length) {
-			return;
-		}
+	static keyMap = {};
 
-		const itemNameEl = html.find('.item-name');
-		if (itemNameEl.length > 0) {
-			const itemName = itemNameEl.html().trim().toLowerCase();
-			const skillCheck = this.keyMap[itemName];
-			if (skillCheck) {
-				const image = this.getSkillCheckImage(skillCheck);
-				if (image) {
-                    const iconEl = html.find('header.red-header').find('img');
-                    iconEl.attr('src', image);
-				}
+	static process(chatMessage, html) {
+		const type = chatMessage.BetterRoll?.fields[0][1]?.title?.toLowerCase();
+		if (type) {
+			const icon = this.abilityIcon[this.keyMap[type]];
+			if (icon) {
+				$(html).find('.item-card .message-portrait').attr('src', icon);
 			}
 		}
 	}
 
-	static getSkillCheckImage(skill) {
+	static _getSkillCheckImage(skill) {
 		switch (skill) {
 			case 'str':
 				return 'systems/dnd5e/icons/skills/blood_11.jpg';
