@@ -15,6 +15,10 @@
 			background-color: $background-whisper;
 		}
 
+		&.none {
+			display: none !important;
+		}
+
 		img {
 			border: none;
 			width: $avatar-width;

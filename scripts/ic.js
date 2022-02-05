@@ -32,7 +32,8 @@ class InCharacterMessageHelper extends AbstractMessage {
 		LEADING: 'leading', // first message in a group of messages
 		CONTINUED: 'continued', // all messages following,
 		ROLL: 'roll',
-		ME: 'me'
+		ME: 'me',
+		INVISIBLE: 'none'
 	};
 
 	async process(chatMessage, html) {
@@ -42,6 +43,10 @@ class InCharacterMessageHelper extends AbstractMessage {
 			this._addClass(html, this.CLASS_NAMES.LITE_UI);
 		} else {
 			this._addClass(html, this.CLASS_NAMES.ROLL_UI);
+		}
+		if (this.isNotSupposedToSee(chatMessage)) {
+			console.warn('is not supposed to see!');
+			this._addClass(html, this.CLASS_NAMES.INVISIBLE);
 		}
 
 		const isDiceRoll = chatMessage.data.type === CONST.CHAT_MESSAGE_TYPES.ROLL;
@@ -221,4 +226,11 @@ class InCharacterMessageHelper extends AbstractMessage {
 	}
 
 	formatWhisper = (string) => (string ? ` (${string})` : '');
+
+	isNotSupposedToSee(chatMessage) {
+		const isAuthor = chatMessage.isAuthor;
+		const whisperTargets = chatMessage.data.whisper;
+		const isWhisper = whisperTargets.length > 0;
+		return isWhisper && !isAuthor && !whisperTargets.includes(game.user.id);
+	}
 }
