@@ -257,6 +257,21 @@
 				}
 			}
 		}
+
+		&.cgmp-desc {
+			.avatar,
+			.message-speaker {
+				display: none;
+			}
+
+			.message-content {
+				display: block;
+			}
+
+			&.me {
+				background-color: #ececec;
+			}
+		}
 	}
 }
 
