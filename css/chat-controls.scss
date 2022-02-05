@@ -16,7 +16,7 @@
 		}
 	}
 
-	.typing-notify {
+	#cgmp-typing-notify {
 		color: $color-white-text;
 		background: none;
 		margin-bottom: 2px;
@@ -46,7 +46,6 @@
 		}
 
 		.dot {
-			color: $color-white-text !important;
 			width: 4px;
 			height: 4px;
 		}
