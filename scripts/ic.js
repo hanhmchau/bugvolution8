@@ -82,6 +82,8 @@ class InCharacterMessageHelper extends AbstractMessage {
 		} else {
 			this._addClass(html, this.CLASS_NAMES.LEADING);
 		}
+
+		this.fixChatPortrait(html);
 	}
 
 	async updateLayout(chatMessage, html, isRoll) {
@@ -104,8 +106,18 @@ class InCharacterMessageHelper extends AbstractMessage {
 			const savedMessageContent = $(html).find('.message-content').clone(true);
 			$(html).html(renderedHTML);
 			$(html).find('.content').append(savedMessageContent);
+			this.fixChatPortrait(chatMessage, html);
 		} else {
 			$(html).find('.message-header').html(renderedHTML).removeClass('message-header');
+		}
+	}
+
+	fixChatPortrait(html) {
+		const messagePortrait = $(html).find('.message-portrait');
+		const itemName = $(html).find('.item-name');
+		if (itemName.has(messagePortrait)) {
+			const newParent = messagePortrait.closest('header.card-header');
+			messagePortrait.detach().prependTo(newParent);
 		}
 	}
 

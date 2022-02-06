@@ -32,27 +32,8 @@ export default class RollIconsModification {
 		if (type) {
 			const icon = this.abilityIcon[this.keyMap[type]];
 			if (icon) {
-				$(html).find('.item-card .message-portrait').attr('src', icon);
+				$(html).find('.message-portrait').attr('src', icon);
 			}
-		}
-	}
-
-	static _getSkillCheckImage(skill) {
-		switch (skill) {
-			case 'str':
-				return 'systems/dnd5e/icons/skills/blood_11.jpg';
-			case 'dex':
-				return 'systems/dnd5e/icons/skills/yellow_35.jpg';
-			case 'con':
-				return 'systems/dnd5e/icons/skills/green_19.jpg';
-			case 'int':
-				return 'systems/dnd5e/icons/skills/red_26.jpg';
-			case 'wis':
-				return 'systems/dnd5e/icons/skills/emerald_11.jpg';
-			case 'cha':
-				return 'systems/dnd5e/icons/skills/violet_18.jpg';
-			default:
-				return '';
 		}
 	}
 }
