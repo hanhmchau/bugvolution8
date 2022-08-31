@@ -5,16 +5,20 @@ export default class DeleteMessage {
 			'ChatLog.prototype._getEntryContextOptions',
 			function (wrapped, ...args) {
 				const options = wrapped(...args);
-				DeleteMessageHelper.appendChatContextMenuOptions(options);
-				return options;
+				const filteredOptions = DeleteMessageHelper.removeExistingDelete(options);
+				return DeleteMessageHelper.appendChatContextMenuOptions(filteredOptions);
 			},
 			'WRAPPER'
 		);
 	}
 }
 class DeleteMessageHelper {
+	static removeExistingDelete(options) {
+		return options.filter(option => option.name != 'SIDEBAR.Delete');
+	}
+
 	static appendChatContextMenuOptions(options) {
-		options.push({
+		return [...options, {
 			name: 'Delete',
 			icon: '<i class="fas fa-trash danger"></i>',
 			condition: (li) => {
@@ -22,7 +26,7 @@ class DeleteMessageHelper {
 				return game.user.isGM || message.isAuthor;
 			},
 			callback: (header) => this._previewDelete(header)
-		});
+		}];
 	}
 
 	static _previewDelete(header) {
