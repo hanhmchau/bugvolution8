@@ -28,11 +28,12 @@ export default class RollIconsModification {
 	static keyMap = {};
 
 	static process(chatMessage, html) {
+		console.warn('fueeeeh?')
 		const type = chatMessage.BetterRoll?.fields[0][1]?.title?.toLowerCase();
 		if (type) {
 			const icon = this.abilityIcon[this.keyMap[type]];
 			if (icon) {
-				$(html).find('.message-portrait').attr('src', icon);
+				$(html).find('.item-name img').attr('src', icon);
 			}
 		}
 	}
