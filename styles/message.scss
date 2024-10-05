@@ -1,0 +1,318 @@
+@import 'variables';
+
+.danger {
+	color: red;
+}
+
+:is(.chat-popout, #chat-log, #chat-results) :is(.message, .chat-message) {
+	margin: 0;
+	border-width: 2px 0 0 0;
+	border-radius: 0 !important;
+	color: $color-text;
+	padding: 0.35rem;
+	font-size: 14px !important;
+	border-top: 2px solid $top-border-normal !important;
+	background-color: $background-normal;
+
+	* {
+		user-select: text !important;
+		-moz-user-select: text;
+		-webkit-user-select: text;
+	}
+
+	.dice-roll {
+		h4 {
+			font-family: Helvetica, sans-serif;
+			font-size: 18px;
+		}
+	}
+
+	&::before {
+		background: none !important;
+		border-radius: 0 !important;
+	}
+
+	&.me:not(.cgmp-desc) {
+		background-color: $background-me;
+		border-color: $top-border-me !important;
+	}
+
+	&.roll {
+		flex-wrap: wrap;
+
+		.message-content {
+			flex-basis: auto;
+			width: 100%;
+
+			.chat-card {
+				border: none;
+
+				.card-header {
+					border-top: none;
+				}
+			}
+
+			.red-full {
+				margin: 2px;
+				padding: 5px;
+				border-radius: 5px;
+				border: 1px solid $roll-template-border;
+				background-color: $roll-template-background;
+			}
+		}
+	}
+
+	&.whisper {
+		background-color: $background-whisper;
+		border-color: $top-border-whisper !important;
+
+		.message-whisper-targets {
+			font-weight: normal;
+		}
+	}
+
+	.message-header {
+		.message-sender {
+			gap: 0.4rem;
+		}
+
+		.avatar img {
+			width: 24px;
+			height: 24px;
+			box-shadow: none;
+
+			text-indent: 100%;
+			white-space: nowrap;
+			overflow: hidden;
+		}
+
+		.name-stacked {
+			min-height: 24px;
+
+			.title {
+				font-weight: 600;
+				font-family: Helvetica, sans-serif;
+				font-size: 14px !important;
+			}
+		}
+
+		.message-metadata {
+			.chat-control {
+				display: inline-block;
+				position: relative;
+				z-index: 1;
+				padding: 2em;
+				margin: -2em;
+			}
+		}
+	}
+
+	&.dfce-cm-top {
+		padding-bottom: 0.25rem;
+	}
+
+	&.dfce-cm-middle,
+	&.dfce-cm-bottom {
+		padding-bottom: 0.25rem;
+		padding-top: 0.25rem;
+
+		.message-header {
+			display: none;
+		}
+
+		border-top: 0px !important;
+	}
+
+	&.dfce-cm-bottom {
+		padding-bottom: 0.5rem;
+	}
+
+	&.cgmp-desc {
+		border-color: #c5c5c5 !important;
+	}
+
+	&.cgmp-as .message-header :is(.message-portrait, .avatar) {
+		display: block !important;
+	}
+
+	&.emote {
+		background-color: $background-emote;
+		border: none;
+		border-top: 2px solid $top-border-emote;
+		padding-bottom: 0;
+		padding-top: 0;
+
+		.avatar {
+			padding-top: 4px;
+		}
+
+		.message-sender,
+		.message-speaker,
+		.message-metadata,
+		.message-timestamp {
+			display: none;
+		}
+
+		.message-header img {
+			width: $avatar-width !important;
+			height: $avatar-width !important;
+		}
+
+		.content {
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			line-height: 1.15rem;
+
+			.message-content {
+				font-style: italic;
+				font-weight: bold;
+				text-align: center;
+				color: $color-emote;
+				padding: 4px 0;
+			}
+		}
+	}
+
+	.card-header {
+		display: flex;
+		flex-direction: column;
+		gap: 0.25rem;
+
+		&.description.check {
+			.summary {
+				display: flex;
+				align-items: center;
+				gap: 0.5rem;
+
+				> img {
+					border: none;
+					width: 32px;
+					height: 32px;
+				}
+
+				.title {
+					font-family: var(--dnd5e-font-roboto-slab);
+					font-size: 15px;
+					font-weight: bold;
+				}
+			}
+		}
+	}
+
+	.dnd5e2.chat-card {
+		.description {
+			padding: 0px !important;
+			border: 0px !important;
+			border-radius: 0 !important;
+			background: none !important;
+			overflow: hidden;
+
+			.wrapper {
+				padding-top: 2px;
+			}
+
+			header.summary {
+				border-bottom: 2px groove #fff;
+				padding-bottom: 4px;
+			}
+
+			.details {
+				font-size: 12px;
+			}
+		}
+
+		.evaluation {
+			border: none;
+
+			.target {
+				background: none;
+
+				.title {
+					font-size: 13px;
+					font-family: unset;
+					font-weight: normal;
+				}
+			}
+		}
+
+		.midi-results {
+			:is(.midi-qol-attack-roll, .midi-qol-damage-roll) div:first-child {
+				font-size: 13px !important;
+			}
+
+			.midi-qol-saves-display {
+				> div:first-child {
+					margin-top: 8px;
+
+					> div:first-child {
+						padding: 0.4rem 0.125rem;
+						font-weight: normal;
+						background: #d5deee;
+						border-radius: 3px;
+					}
+
+					> div:nth-child(2) {
+						display: none;
+					}
+				}
+			}
+		}
+
+		.card-footer {
+			border-top: 2px groove #fff;
+			padding-top: 8px;
+
+			&.pills {
+				.pill {
+					background-color: rgba(0, 0, 0, 0.05);
+					text-transform: none;
+					font-weight: normal;
+					color: #363636;
+					font-size: 10px;
+				}
+			}
+		}
+	}
+
+	&.roll-card .message-content {
+		padding: 0.45rem;
+		border: 1px solid var(--dnd5e-color-gold);
+		border-radius: 3px;
+		background: var(--dnd5e-color-card);
+		overflow: hidden;
+
+		.dice-roll .dice-formula {
+			transition: all 250ms ease;
+			margin-top: 0.25rem;
+		}
+
+		.dice-roll:not(.expanded) .dice-formula {
+			display: none;
+		}
+
+		:not(.midi-results) .dice-result .dice-total {
+			margin-top: 0.25rem;
+		}
+
+		.midi-results .dice-result .dice-total {
+			margin-top: 0.1rem;
+		}
+	}
+}
+
+#preview-delete-dialog {
+	.dialog-prompt {
+		margin-top: 5px;
+	}
+
+	.preview-delete {
+		margin: 10px 0 5px 0 !important;
+		max-height: 500px;
+		overflow: auto;
+
+		#context-menu {
+			display: none;
+		}
+	}
+}

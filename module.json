@@ -1,28 +1,28 @@
 {
-	"name": "bugvolution8",
+	"id": "bugvolution8",
 	"title": "Bugvolution",
 	"description": "A revolution in the war of chat log interface.",
-	"version": "0.0.8",
-	"minimumCoreVersion": "0.8.6",
-	"compatibleCoreVersion": "9",
-	"author": "Arietta",
-
-	"scripts": [],
-	"esmodules": [
-		"main.js",
-		"scripts/**/*.js", 
-		"libs/**/*.js"],
-	"styles": ["dist/bugvolution8.css"],
-
+	"version": "0.1.0",
+	"compatibility": {
+		"minimum": "11",
+		"verified": "11.315"
+	},
+	"authors": [
+		{
+			"name": "Arietta"
+		}
+	],
+	"esmodules": ["main.js", "gulpfile.js"],
+	"styles": ["dist/bugvolution8.min.css"],
 	"languages": [
 		{
-		  "lang": "en",
-		  "name": "English",
-		  "path": "lang/en.json"
+			"lang": "en",
+			"name": "English",
+			"path": "lang/en.json",
+			"flags": {}
 		}
-	  ],
-	
+	],
 	"url": "https://github.com/hanhmchau/bugvolution8",
 	"manifest": "https://raw.githubusercontent.com/hanhmchau/bugvolution8/master/module.json",
-	"download": "https://github.com/hanhmchau/bugvolution8/archive/refs/tags/0.0.8.zip"
+	"download": "https://github.com/hanhmchau/bugvolution8/archive/refs/tags/0.1.0.zip"
 }
