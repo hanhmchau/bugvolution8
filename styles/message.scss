@@ -32,7 +32,7 @@
 		border-radius: 0 !important;
 	}
 
-	&.me:not(.cgmp-desc) {
+	&.me:not(.cgmp-desc, .whisper) {
 		background-color: $background-me;
 		border-color: $top-border-me !important;
 	}
@@ -77,8 +77,8 @@
 		}
 
 		.avatar img {
-			width: 24px;
-			height: 24px;
+			width: 36px;
+			height: 36px;
 			box-shadow: none;
 
 			text-indent: 100%;
@@ -255,6 +255,31 @@
 					> div:nth-child(2) {
 						display: none;
 					}
+				}
+
+				.midi-qol-tooltip:hover .midi-qol-tooltiptext,
+				.midi-qol-tooltip .midi-qol-tooltiptext {
+					visibility: unset;
+				}
+
+				.midi-qol-save-tooltip {
+					background-color: unset;
+
+					.dice-roll {
+						&:not(.expanded) {
+							opacity: 0;
+						}
+
+						background-color: var(--dnd5e-color-card);
+						padding: 3px;
+						border-radius: 3px;
+						box-shadow: 0 0 2px #fff inset;
+						border: 1px solid var(--color-border-light-2);
+					}
+				}
+
+				.midi-qol-save-class .midi-qol-save-total {
+					font-size: 14px;
 				}
 			}
 		}
