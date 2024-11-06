@@ -16,6 +16,10 @@
 			"prompts": {
 				"retroCrit": "Upgrade to Crit?",
 				"retroAdv": "Roll {target}?"
+			},
+			"merge": {
+				"maximumTime-s": "Maximum Period of Time",
+				"maximumTime-l": "The Maximum period of time between messages that will allow them to be merged together (in minutes)."
 			}
 		}
 	}

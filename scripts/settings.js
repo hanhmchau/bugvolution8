@@ -1,9 +1,20 @@
-export const ModuleOptions = {};
+export const ModuleOptions = {
+	MAXIMUM_TIME_BETWEEN_MERGE: 'chat.merge.maximumTime'
+};
 
 export class ModuleSettings {
 	static MODULE_NAME = 'bugvolution8';
 
-	static registerSettings() {}
+	static registerSettings() {
+		game.settings.register(
+			this.MODULE_NAME,
+			ModuleOptions.MAXIMUM_TIME_BETWEEN_MERGE,
+			this._buildConfig(ModuleOptions.MAXIMUM_TIME_BETWEEN_MERGE, {
+				type: Number,
+				default: 15
+			})
+		);
+	}
 
 	static getSetting(option) {
 		return game.settings.get(this.MODULE_NAME, option);

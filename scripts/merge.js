@@ -1,3 +1,4 @@
+import { ModuleOptions, ModuleSettings } from './settings.js';
 import { arrayEquals } from './utils.js';
 
 export default class Merger {
@@ -32,7 +33,10 @@ export default class Merger {
 		const isTheSameGroupableType = prevMessage.style === nextMessage.style; // nextMessage.type is already confirmed to be groupable
 		const isFromTheSameActor = this.isFromTheSameActor(prevMessage, nextMessage);
 		const sameWhisperRecipients = this.sameWhisperRecipients(prevMessage, nextMessage);
-		return isFromTheSameActor && sameWhisperRecipients && isTheSameGroupableType;
+
+		const timeLimit = parseInt(ModuleSettings.getSetting(ModuleOptions.MAXIMUM_TIME_BETWEEN_MERGE));
+		const isWithinTimeLimit = this.isWithinTimeLimit(prevMessage, nextMessage, timeLimit);
+		return isFromTheSameActor && sameWhisperRecipients && isTheSameGroupableType && isWithinTimeLimit;
 	}
 
 	/**
@@ -46,6 +50,7 @@ export default class Merger {
 
 		const isWhisper = nextMessage.whisper.length > 0;
 		const isOOC = nextMessage.style === CONST.CHAT_MESSAGE_STYLES.OOC;
+		const isOther = nextMessage.style === CONST.CHAT_MESSAGE_STYLES.OTHER;
 
 		if (prevSpeaker.token || nextSpeaker.token) {
 			return prevSpeaker.token === nextSpeaker.token;
@@ -53,7 +58,7 @@ export default class Merger {
 		if (prevSpeaker.actor || nextSpeaker.actor) {
 			return prevSpeaker.actor === nextSpeaker.actor;
 		}
-		if (isWhisper || isOOC) {
+		if (isWhisper || isOOC || isOther) {
 			return prevMessage.author.id === nextMessage.author.id;
 		}
 		return false;
@@ -71,6 +76,15 @@ export default class Merger {
 		}
 
 		return arrayEquals(prevMessage.whisper, nextMessage.whisper);
+	}
+
+	/**
+	 * Returns whether two messages is within a certain amount of time of each other
+	 * @param {*} prevMessage
+	 * @param {*} nextMessage
+	 */
+	static isWithinTimeLimit(prevMessage, nextMessage, minutes) {
+		return (nextMessage.timestamp - prevMessage.timestamp) / 1000 < minutes * 60;
 	}
 
 	/**
