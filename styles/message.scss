@@ -6,12 +6,12 @@
 
 :is(#chat-popout, #chat-log, #chat-results) :is(.message, .chat-message) {
 	margin: 0;
-	border-width: 2px 0 0 0;
 	border-radius: 0 !important;
 	color: $color-text;
-	padding: 0.4rem 0.35rem;
+	padding: 0.4rem 0.35rem 0.4rem 0.4rem;
 	font-size: 14px !important;
 	border-top: 2px solid $top-border-normal !important;
+	border-left: 0px !important;
 	background-color: $background-normal;
 
 	* {
