@@ -20,7 +20,8 @@ export default class Merger {
 		const isIC = chatMessage.style === CONST.CHAT_MESSAGE_STYLES.IC;
 		const isOther = chatMessage.style === CONST.CHAT_MESSAGE_STYLES.OTHER;
 		const isRoll = chatMessage.rolls && chatMessage.rolls.length;
-		return (isOOC || isIC || (isOther && !isRoll)) && chatMessage.speaker.alias !== '#CGMP_DESCRIPTION'; // to play nice with Cautious Gamemaster's Pack's /desc command
+		const hasItem = !!chatMessage.getAssociatedItem();
+		return (isOOC || isIC || isOther) && !(isRoll || hasItem) && chatMessage.speaker.alias !== '#CGMP_DESCRIPTION'; // to play nice with Cautious Gamemaster's Pack's /desc command
 	}
 
 	/**

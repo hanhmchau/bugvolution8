@@ -2,7 +2,7 @@
 	"id": "bugvolution8",
 	"title": "Bugvolution",
 	"description": "A revolution in the war of chat log interface.",
-	"version": "0.1.4",
+	"version": "0.1.5",
 	"compatibility": {
 		"minimum": "11",
 		"verified": "12"
@@ -24,5 +24,5 @@
 	],
 	"url": "https://github.com/hanhmchau/bugvolution8",
 	"manifest": "https://raw.githubusercontent.com/hanhmchau/bugvolution8/master/module.json",
-	"download": "https://github.com/hanhmchau/bugvolution8/archive/refs/tags/0.1.4.zip"
+	"download": "https://github.com/hanhmchau/bugvolution8/archive/refs/tags/0.1.5.zip"
 }
