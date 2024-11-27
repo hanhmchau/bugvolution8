@@ -132,7 +132,7 @@
 	&.emote {
 		background-color: $background-emote;
 		border: none;
-		border-top: 2px solid $top-border-emote;
+		border-top: 2px solid $top-border-emote !important;
 		padding-bottom: 0;
 		padding-top: 0;
 
