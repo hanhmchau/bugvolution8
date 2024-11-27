@@ -8,16 +8,74 @@
 	margin: 0;
 	border-radius: 0 !important;
 	color: $color-text;
-	padding: 0.4rem 0.35rem 0.4rem 0.4rem;
-	font-size: 14px !important;
-	border-top: 2px solid $top-border-normal !important;
+	padding: 0 5px 5px 8px;
+	font-size: 13px !important;
+	border-top-width: 2px !important;
+	border-top-color: $top-border-normal;
 	border-left: 0px !important;
 	background-color: $background-normal;
+
+	&:not(.roll-card) {
+		display: flex;
+		flex-direction: row;
+		justify-content: flex-start;
+
+		.right-content {
+			.avatar {
+				display: none !important;
+			}
+
+			flex: 1;
+			padding: 1px 0 1px 10px;
+			min-width: 0;
+			color: #404040;
+
+			.message-timestamp {
+				font-size: 0.8em;
+				color: #666;
+				margin-bottom: 4px;
+				display: block;
+			}
+
+			.message-metadata,
+			.message-header {
+				display: none;
+			}
+
+			.message-originator {
+				font-weight: bold;
+			}
+
+			.message-content {
+				display: inline;
+			}
+
+			.message-flavor {
+				font-size: 0.85em;
+				font-style: italic;
+				color: #666;
+				margin: 4px 0;
+			}
+		}
+
+		.left-avatar {
+			img {
+				height: 28px;
+				border: none;
+			}
+
+			flex: none !important;
+		}
+	}
 
 	* {
 		user-select: text !important;
 		-moz-user-select: text;
 		-webkit-user-select: text;
+	}
+
+	&.leading {
+		padding-top: 4px;
 	}
 
 	.dice-roll {
@@ -32,7 +90,7 @@
 		border-radius: 0 !important;
 	}
 
-	&.me:not(.cgmp-desc, .whisper) {
+	&.me:not(.cgmp-desc, .whisper, .emote) {
 		background-color: $background-me;
 		border-color: $top-border-me !important;
 	}
@@ -71,14 +129,48 @@
 		}
 	}
 
+	&.emote {
+		background-color: $background-emote;
+		border: none;
+		border-top: 2px solid $top-border-emote;
+		padding-bottom: 0;
+		padding-top: 0;
+
+		.message-header,
+		.message-originator,
+		.message-speaker,
+		.message-timestamp {
+			display: none !important;
+		}
+
+		.left-avatar {
+			padding-top: 4px;
+		}
+
+		.right-content {
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			line-height: 1.15rem;
+
+			.message-content {
+				font-style: italic;
+				font-weight: bold;
+				text-align: center;
+				color: $color-emote;
+				padding: 4px 0;
+			}
+		}
+	}
+
 	.message-header {
 		.message-sender {
 			gap: 0.4rem;
 		}
 
 		.avatar img {
-			width: 36px;
-			height: 36px;
+			width: 28px;
+			height: 28px;
 			box-shadow: none;
 
 			text-indent: 100%;
@@ -107,16 +199,16 @@
 		}
 	}
 
-	&.leading {
-		padding-bottom: 0.25rem;
-	}
-
 	&.continued {
-		padding-bottom: 0.45rem;
-		padding-top: 0.35rem;
+		.message-header,
+		.message-originator,
+		.message-timestamp {
+			display: none !important;
+		}
 
-		.message-header {
-			display: none;
+		.left-avatar {
+			visibility: hidden;
+			height: 1px;
 		}
 
 		border-top: 0px !important;
@@ -128,45 +220,6 @@
 
 	&.cgmp-as .message-header :is(.message-portrait, .avatar) {
 		display: block !important;
-	}
-
-	&.emote {
-		background-color: $background-emote;
-		border: none;
-		border-top: 2px solid $top-border-emote;
-		padding-bottom: 0;
-		padding-top: 0;
-
-		.avatar {
-			padding-top: 4px;
-		}
-
-		.message-sender,
-		.message-speaker,
-		.message-metadata,
-		.message-timestamp {
-			display: none;
-		}
-
-		.message-header img {
-			width: $avatar-width !important;
-			height: $avatar-width !important;
-		}
-
-		.content {
-			display: flex;
-			justify-content: center;
-			align-items: center;
-			line-height: 1.15rem;
-
-			.message-content {
-				font-style: italic;
-				font-weight: bold;
-				text-align: center;
-				color: $color-emote;
-				padding: 4px 0;
-			}
-		}
 	}
 
 	.card-header {

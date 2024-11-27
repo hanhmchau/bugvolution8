@@ -1,5 +1,6 @@
 import addDamageApplyButtons from './apply-dmg-buttons.js';
 import Merger from './merge.js';
+import Relayouter from './relayout.js';
 import RollIconsModification from './roll-icons.js';
 
 export default class InCharacterMessage {
@@ -16,6 +17,8 @@ export default class InCharacterMessage {
 				RollIconsModification.process(this, html);
 				addIsRollCardClass(html);
 				addNaturalRollClass(this, html);
+				addStyleClass(this, html);
+				relayout(this, html);
 				await addDamageApplyButtons(this, html);
 				// appendRetroCrit(this, html);
 				/** End mutation */
@@ -26,6 +29,10 @@ export default class InCharacterMessage {
 		);
 	}
 }
+
+const relayout = (chatMessage, html) => {
+	Relayouter.relayout(chatMessage, html);
+};
 
 const addMergingClass = (chatMessage, html) => {
 	if (Merger.isContinuation(chatMessage)) {
@@ -39,6 +46,22 @@ const addIsMeClass = (chatMessage, html) => {
 	if (chatMessage.user.id === game.user.id) {
 		html.addClass('me');
 	}
+};
+
+const addStyleClass = (chatMessage, html) => {
+	let className = 'other';
+	switch (chatMessage.style) {
+		case 1:
+			className = 'ooc';
+			break;
+		case 2:
+			className = 'ic';
+			break;
+		case 3:
+			className = 'emote';
+			break;
+	}
+	html.addClass(className);
 };
 
 const addIsRollCardClass = (html) => {
