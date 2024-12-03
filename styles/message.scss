@@ -94,6 +94,7 @@
 	&::before {
 		background: none !important;
 		border-radius: 0 !important;
+		content: unset;
 	}
 
 	&.me:not(.cgmp-desc, .whisper, .emote) {
