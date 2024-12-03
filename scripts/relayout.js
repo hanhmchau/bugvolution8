@@ -2,20 +2,25 @@ import { ModuleOptions, ModuleSettings } from './settings.js';
 
 export default class Relayouter {
 	static relayout(chatMessage, html) {
-		if (!html.hasClass('roll-card')) {
-			html.children().wrapAll("<div class='right-content'></div>");
+		if (html.find('.xmidi-qol-flex-container').length > 0) {
+			return;
+		}
+		html.children().wrapAll("<div class='right-content'></div>");
 
-			const avatar = $(`<div class="left-avatar"><img src="${this.getAvatar(chatMessage)}"></div>`);
-			html.prepend(avatar);
+		const avatar = $(`<div class="left-avatar"><img src="${this.getAvatar(chatMessage)}"></div>`);
+		html.prepend(avatar);
 
-			const timestamp = html.find('.message-timestamp');
-			const originator = this.buildSender(chatMessage);
-			const flavor = this.buildFlavor(chatMessage);
+		const timestamp = html.find('.message-timestamp');
+		const originator = this.buildSender(chatMessage);
+		const flavor = this.buildFlavor(chatMessage);
 
-			const content = html.find('.right-content');
-			$(content).prepend(flavor);
-			$(content).prepend(originator);
-			$(content).prepend(timestamp);
+		const content = html.find('.right-content');
+		$(content).prepend(flavor);
+		$(content).prepend(originator);
+		$(content).prepend(timestamp);
+
+		if (html.hasClass('roll-card') || html.hasClass('roll')) {
+			$(content).find('.message-content').appendTo(html).addClass('down');
 		}
 	}
 

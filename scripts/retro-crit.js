@@ -55,8 +55,6 @@ const forceCrit = async (message) => {
 		const ogIndex = message.rolls.indexOf(roll);
 		message.rolls[ogIndex] = crits[index];
 	});
-
-	console.warn(midi.roll);
 };
 
 const mapToCrits = (actor, rolls) => {

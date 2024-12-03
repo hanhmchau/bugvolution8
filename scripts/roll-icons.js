@@ -1,86 +1,41 @@
 export default class RollIconsModification {
-	static _check = (stat) => `${stat} ability check`;
-	static _save = (stat) => `${stat} saving throw`;
-	static _skill = (stat) => `${stat} skill check`;
-
-	static abilityMap = new Map();
-	static skillMap = new Map();
-
-	static abilities = {
-		str: {
-			label: 'strength',
-			icon: 'icons/skills/melee/unarmed-punch-fist-yellow-red.webp',
-			skills: ['Athletics']
-		},
-		dex: {
-			label: 'dexterity',
-			icon: 'icons/skills/targeting/crosshair-triple-strike-orange.webp',
-			skills: ['Acrobatics', 'Sleight of Hand', 'Stealth']
-		},
-		con: {
-			label: 'constitution',
-			icon: 'icons/magic/life/cross-worn-green.webp',
-			skills: []
-		},
-		int: {
-			label: 'intelligence',
-			icon: 'icons/sundries/documents/document-sealed-red-yellow.webp',
-			skills: ['Arcana', 'History', 'Investigation', 'Nature', 'Religion']
-		},
-		wis: {
-			label: 'wisdom',
-			icon: 'icons/magic/perception/orb-eye-scrying.webp',
-			skills: ['Animal Handling', 'Insight', 'Medicine', 'Perception', 'Survival']
-		},
-		cha: {
-			label: 'charisma',
-			icon: 'icons/creatures/birds/corvid-flying-wings-purple.webp',
-			skills: ['Deception', 'Intimidation', 'Performance', 'Persuasion']
-		}
+	static abilityIconMap = {
+		str: 'icons/skills/melee/unarmed-punch-fist-yellow-red.webp',
+		dex: 'icons/skills/targeting/crosshair-triple-strike-orange.webp',
+		con: 'icons/magic/life/cross-worn-green.webp',
+		int: 'icons/sundries/documents/document-sealed-red-yellow.webp',
+		wis: 'icons/magic/perception/orb-eye-scrying.webp',
+		cha: 'icons/creatures/birds/corvid-flying-wings-purple.webp'
 	};
 
-	static init() {
-		for (const key in this.abilities) {
-			const item = this.abilities[key];
-
-			this.abilityMap.set(this._check(item.label), key);
-			this.abilityMap.set(this._save(item.label), key);
-
-			for (const skill of item.skills) {
-				this.skillMap.set(this._skill(skill.toLowerCase()), {
-					key,
-					label: skill
-				});
-			}
-		}
-	}
+	static init() {}
 
 	static identify(chatMessage) {
-		const flavor = chatMessage.flavor.trim().toLowerCase();
+		const flag = chatMessage.getFlag('dnd5e', 'roll');
+		if (flag && ['skill', 'save', 'ability'].includes(flag.type)) {
+			const roll = chatMessage.rolls[0];
+			const dualRolls = roll?.dice[0]?.results;
+			const total = roll.total;
 
-		if (this._isAbility(flavor)) {
-			const key = this.abilityMap.get(flavor);
-
-			return {
-				icon: this.abilities[key].icon,
-				title: chatMessage.flavor
-			};
-		} else if (this._isSkill(flavor)) {
-			const key = this.skillMap.get(flavor).key;
-
-			return {
-				icon: this.abilities[key].icon,
-				title: this.skillMap.get(flavor).label
-			};
+			switch (flag.type) {
+				case 'skill':
+					const skill = CONFIG.DND5E.skills[flag.skillId];
+					return {
+						icon: this.abilityIconMap[skill.ability],
+						title: skill.label,
+						total,
+						dualRolls
+					};
+				case 'save':
+				case 'ability':
+					return {
+						icon: this.abilityIconMap[flag.abilityId],
+						title: roll.options.flavor,
+						total,
+						dualRolls
+					};
+			}
 		}
-	}
-
-	static _isSkill(flavor) {
-		return this.skillMap.has(flavor);
-	}
-
-	static _isAbility(flavor) {
-		return this.abilityMap.has(flavor);
 	}
 
 	static process(chatMessage, html) {

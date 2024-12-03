@@ -20,6 +20,10 @@
 			"merge": {
 				"maximumTime-s": "Maximum Period of Time",
 				"maximumTime-l": "The Maximum period of time between messages that will allow them to be merged together (in minutes)."
+			},
+			"font": {
+				"size-s": "Chat Font Size",
+				"size-l": "Font size of chat messages (in pt)."
 			}
 		}
 	}

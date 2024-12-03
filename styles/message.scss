@@ -9,63 +9,69 @@
 	border-radius: 0 !important;
 	color: $color-text;
 	padding: 0 5px 5px 8px;
-	font-size: 13px !important;
 	border-top-width: 2px !important;
 	border-top-color: $top-border-normal !important;
 	border-left: 0px !important;
 	background-color: $background-normal;
 
-	&:not(.roll-card) {
-		display: flex;
-		flex-direction: row;
-		justify-content: flex-start;
+	display: flex;
+	flex-direction: row;
+	justify-content: flex-start;
 
-		.right-content {
-			.avatar {
-				display: none !important;
-			}
-
-			flex: 1;
-			padding: 1px 0 1px 10px;
-			min-width: 0;
-			color: #404040;
-
-			.message-timestamp {
-				font-size: 0.8em;
-				color: #666;
-				margin-bottom: 4px;
-				display: block;
-			}
-
-			.message-metadata,
-			.message-header {
-				display: none;
-			}
-
-			.message-originator {
-				font-weight: bold;
-			}
-
-			.message-content {
-				display: inline;
-			}
-
-			.message-flavor {
-				font-size: 0.85em;
-				font-style: italic;
-				color: #666;
-				margin: 4px 0;
-			}
+	.right-content {
+		.avatar {
+			display: none !important;
 		}
 
-		.left-avatar {
-			img {
-				height: 28px;
-				border: none;
-			}
+		flex: 1;
+		padding: 1px 0 1px 10px;
+		min-width: 0;
+		color: #404040;
 
-			flex: none !important;
+		.message-timestamp {
+			font-size: 0.8em;
+			color: #666;
+			margin-bottom: 4px;
+			display: block;
 		}
+
+		.message-metadata,
+		.message-header {
+			display: none;
+		}
+
+		.message-originator {
+			font-weight: bold;
+		}
+
+		.message-content:not(.down) {
+			display: inline;
+		}
+
+		.message-flavor {
+			font-size: 0.85em;
+			font-style: italic;
+			color: #666;
+			margin: 4px 0;
+		}
+	}
+
+	.left-avatar {
+		img {
+			width: 28px;
+			height: 28px;
+			box-shadow: none;
+
+			text-indent: 100%;
+			white-space: nowrap;
+			overflow: hidden;
+
+			object-fit: cover;
+			object-position: top;
+			border: none;
+		}
+
+		flex: none !important;
 	}
 
 	* {
@@ -176,6 +182,10 @@
 			text-indent: 100%;
 			white-space: nowrap;
 			overflow: hidden;
+
+			object-fit: cover;
+			object-position: top;
+			border: none;
 		}
 
 		.name-stacked {
@@ -184,7 +194,7 @@
 			.title {
 				font-weight: 600;
 				font-family: Helvetica, sans-serif;
-				font-size: 14px !important;
+				font-size: initial;
 			}
 		}
 
@@ -240,9 +250,9 @@
 				}
 
 				.title {
-					font-family: var(--dnd5e-font-roboto-slab);
-					font-size: 15px;
-					font-weight: bold;
+					font-family: 'Modesto Condensed', 'Palatino Linotype', serif;
+					font-size: 18px;
+					font-weight: 700;
 				}
 			}
 		}
@@ -262,7 +272,7 @@
 			border: 0px !important;
 			border-radius: 0 !important;
 			background: none !important;
-			overflow: hidden;
+			overflow: visible;
 
 			.wrapper {
 				padding-top: 2px;
@@ -297,10 +307,20 @@
 				font-size: 13px !important;
 			}
 
+			.midi-qol-attack-roll.has-attack,
+			.midi-qol-damage-roll.has-damage,
+			.midi-qol-midi-qol-other-damage-roll.has-damage,
+			.midi-qol-midi-qol-bonus-damage-roll.has-damage,
+			.midi-qol-saves-display.has-save {
+				margin-bottom: 7px;
+			}
+
+			.midi-qol-saves-display:not(.has-save) {
+				display: none;
+			}
+
 			.midi-qol-saves-display {
 				> div:first-child {
-					margin-top: 8px;
-
 					> div:first-child {
 						padding: 0.4rem 0.125rem;
 						font-weight: normal;
@@ -356,51 +376,118 @@
 		}
 	}
 
-	&.roll-card .message-content {
-		padding: 0.45rem;
-		border: 1px solid var(--dnd5e-color-gold);
-		border-radius: 3px;
-		background: var(--dnd5e-color-card);
-		overflow: hidden;
+	&.roll-card {
+		flex-wrap: wrap;
+
+		.message-content {
+			margin: 2px;
+			padding: 5px;
+			border: 1px solid var(--dnd5e-color-gold);
+			border-radius: 3px;
+			background: var(--dnd5e-color-card);
+			overflow: visible;
+
+			:not(.midi-results) .dice-result .dice-total {
+				margin-top: 0.25rem;
+			}
+
+			.dice-roll:not(.expanded) .dice-formula {
+				display: none;
+			}
+		}
+
+		.message-flavor {
+			display: none;
+		}
+	}
+
+	&:is(.roll-card, .roll) .message-content {
+		&.down {
+			flex-basis: auto;
+			width: 100%;
+		}
 
 		.dice-roll {
+			.dice-total,
+			.dice-formula {
+				background: rgba(0, 0, 0, 0.08);
+			}
+
 			.dice-formula {
 				transition: all 250ms ease;
 				margin-top: 0.25rem;
 			}
 
-			&:not(.expanded) .dice-formula {
-				display: none;
-			}
-
 			.dice-result {
+				margin-bottom: 0;
+
 				.dice-tooltip .dice .dice-rolls .constant {
 					margin-top: 0.05rem;
 				}
 
-				.dice-total {
-					margin-top: 0.1rem;
+				.dice-totals {
+					display: flex;
+					flex-direction: row;
 
-					&::before,
-					&::after {
-						content: unset;
-					}
+					.dice-total {
+						margin-top: 0.1rem;
 
-					.base-dice {
-						background-image: url(../../../icons/svg/d20-grey.svg);
-						width: 22px;
-						line-height: 22px;
-						background-size: 22px;
-						background-repeat: no-repeat;
-						float: left;
-						font-weight: bold;
-						font-size: 12px;
-						text-align: center;
-						opacity: 0.95;
-						position: absolute;
-						top: 50%;
-						right: 5px;
-						transform: translate(0, -50%);
+						&::before,
+						&::after {
+							content: unset;
+						}
+
+						.base-dice {
+							background-image: url(../../../icons/svg/d20-grey.svg);
+							width: 22px;
+							line-height: 22px;
+							background-size: 22px;
+							background-repeat: no-repeat;
+							float: left;
+							font-weight: bold;
+							font-size: 12px;
+							text-align: center;
+							opacity: 0.95;
+							position: absolute;
+							top: 50%;
+							right: 5px;
+							transform: translate(0, -50%);
+						}
+
+						&.fumble {
+							color: #aa0200;
+							background: #ffdddd;
+							border: 1px solid #6e0000;
+
+							.base-dice {
+								filter: sepia(0.5) hue-rotate(-60deg);
+								color: #aa0200;
+							}
+
+							.icons {
+								display: none;
+							}
+						}
+
+						&.crit {
+							color: #257f11;
+							background: #c7d0c0;
+							border: 1px solid #006c00;
+
+							.base-dice {
+								filter: sepia(0.5) hue-rotate(60deg);
+								color: #257f11;
+							}
+
+							.icons {
+								display: none;
+							}
+						}
+
+						&.discarded {
+							opacity: 0.4;
+							border: 1px solid #888888;
+						}
 					}
 				}
 
@@ -455,31 +542,6 @@
 					}
 				}
 			}
-			&.fumble .dice-total {
-				color: #aa0200;
-				background: #ffdddd;
-				border: 1px solid #6e0000;
-
-				.base-dice {
-					filter: sepia(0.5) hue-rotate(-60deg);
-					color: #aa0200;
-				}
-			}
-
-			&.crit .dice-total {
-				color: #257f11;
-				background: #c7d0c0;
-				border: 1px solid #006c00;
-
-				.base-dice {
-					filter: sepia(0.5) hue-rotate(60deg);
-					color: #257f11;
-				}
-			}
-		}
-
-		:not(.midi-results) .dice-result .dice-total {
-			margin-top: 0.25rem;
 		}
 	}
 }

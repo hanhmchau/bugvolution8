@@ -1,5 +1,8 @@
+import { changeFontSize } from './ic.js';
+
 export const ModuleOptions = {
-	MAXIMUM_TIME_BETWEEN_MERGE: 'chat.merge.maximumTime'
+	MAXIMUM_TIME_BETWEEN_MERGE: 'chat.merge.maximumTime',
+	FONT_SIZE: 'chat.font.size'
 };
 
 export class ModuleSettings {
@@ -12,6 +15,21 @@ export class ModuleSettings {
 			this._buildConfig(ModuleOptions.MAXIMUM_TIME_BETWEEN_MERGE, {
 				type: Number,
 				default: 15
+			})
+		);
+		game.settings.register(
+			this.MODULE_NAME,
+			ModuleOptions.FONT_SIZE,
+			this._buildConfig(ModuleOptions.FONT_SIZE, {
+				type: new foundry.data.fields.NumberField({
+					min: 8,
+					max: 24,
+					step: 1,
+					initial: 14,
+					nullable: false
+				}),
+				default: 14,
+				onChange: changeFontSize
 			})
 		);
 	}
