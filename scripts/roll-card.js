@@ -47,18 +47,25 @@ function _buildDiceTotal(roll) {
 
 const getNaturalRoll = (roll) => {
 	const dice = roll.dice[0];
-	const naturalDice = dice.results.find((dice) => dice.active);
-	const diff = roll.total - naturalDice.result;
-	return {
-		isD20: roll.validD20Roll,
-		diceRolls: dice.results.map((res) => ({
-			isCritical: dice.options.critical === res.result,
-			isFumble: dice.options.fumble === res.result,
-			baseRoll: res.result,
-			totalRoll: res.result + diff,
-			discarded: res.discarded
-		}))
-	};
+	if (dice) {
+		const naturalDice = dice.results.find((dice) => dice.active);
+		const diff = roll.total - naturalDice.result;
+		return {
+			isD20: !!roll.validD20Roll,
+			diceRolls: dice.results.map((res) => ({
+				isCritical: dice.options.critical === res.result,
+				isFumble: dice.options.fumble === res.result,
+				baseRoll: res.result,
+				totalRoll: res.result + diff,
+				discarded: res.discarded
+			}))
+		};
+	} else {
+		return {
+			isD20: false,
+			diceRolls: []
+		};
+	}
 };
 
 const appendBaseDice = (diceTotal, number) => {
